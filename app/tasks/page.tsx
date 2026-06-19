@@ -1,5 +1,4 @@
 import { getTasks } from '@/lib/api';
-import { teamMembers } from '@/lib/constants';
 import { KanbanBoard } from '@/components/tasks/kanban-board';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';

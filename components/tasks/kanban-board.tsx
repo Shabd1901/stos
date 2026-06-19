@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { Task } from '@/lib/api/types';
-import { teamMembers } from '@/lib/constants';
 import { Card } from '@/components/ui/card';
 import { TaskCard } from './task-card';
 import { EmptyState } from '@/components/ui/empty-state';

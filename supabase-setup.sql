@@ -23,9 +23,10 @@ DROP TABLE IF EXISTS agency_users CASCADE;
 
 -- Table: agency_users
 CREATE TABLE public.agency_users (
-    id TEXT PRIMARY KEY, -- Using TEXT to support both UUIDs and custom IDs (like 'dummy-admin-id')
+    id TEXT PRIMARY KEY, -- Using TEXT to support both UUIDs and custom IDs (like 'Shabd1908')
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
+    password_hash TEXT, -- Storing SHA-256 password hash securely
     role TEXT NOT NULL DEFAULT 'member',
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
 );
@@ -262,7 +263,7 @@ CREATE POLICY "Enable all access" ON public.system_errors FOR ALL USING (true) W
 -- ==========================================
 
 -- Seed only the single requested admin user
-INSERT INTO public.agency_users (id, name, email, role) VALUES
-('Shabd1901', 'Shabdansh Prajapati', 'Shabd1901', 'admin')
+INSERT INTO public.agency_users (id, name, email, password_hash, role) VALUES
+('Shabd1908', 'Shabdansh Prajapati', 'Shabd1908', 'f352d9ca1f9cf81955b45bfe9f67af781b117ff5d4a559cb152bfe396e34132b', 'admin')
 ON CONFLICT (id) DO UPDATE 
-SET name = EXCLUDED.name, email = EXCLUDED.email, role = EXCLUDED.role;
+SET name = EXCLUDED.name, email = EXCLUDED.email, password_hash = EXCLUDED.password_hash, role = EXCLUDED.role;

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, Moon, Sun, Plus, UserPlus, FolderPlus, CheckSquare, CreditCard } from 'lucide-react';
+import { Menu, Moon, Sun, Plus, UserPlus, FolderPlus, CheckSquare, CreditCard, LogOut } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
@@ -20,7 +20,7 @@ import { NewProjectDialog } from '@/components/projects/new-project-dialog';
 import { NewTaskDialog } from '@/components/tasks/new-task-dialog';
 import { NewPaymentDialog } from '@/components/payments/new-payment-dialog';
 import { NotificationBell } from '@/components/layout/notification-bell';
-// Removed auth imports
+import { useAuth } from '@/components/auth-provider';
 
 export function Header() {
   const pathname = usePathname();
@@ -31,6 +31,19 @@ export function Header() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const { user } = useAuth();
+
+  const handleLogout = async () => {
+    try {
+      const res = await fetch('/api/auth/logout', { method: 'POST' });
+      if (res.ok) {
+        window.location.href = '/login';
+      }
+    } catch (e) {
+      console.error('Logout error:', e);
+    }
+  };
 
   // Breadcrumb logic
   const getBreadcrumbs = () => {
@@ -147,7 +160,32 @@ export function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Removed User Profile & Logout Dropdown */}
+          {/* User Profile & Logout Dropdown */}
+          {user && (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="relative h-9 w-9 rounded-full bg-muted border border-border flex items-center justify-center p-0 overflow-hidden">
+                  <div className="flex h-full w-full items-center justify-center font-bold text-sm text-primary-foreground bg-primary uppercase">
+                    {user.name.charAt(0)}
+                  </div>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56 p-2">
+                <DropdownMenuLabel className="font-normal flex flex-col p-2">
+                  <span className="font-bold text-sm text-foreground">{user.name}</span>
+                  <span className="text-xs text-muted-foreground truncate">{user.email}</span>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem 
+                  className="flex items-center gap-3 p-2.5 cursor-pointer rounded-md text-red-600 dark:text-red-400 focus:bg-red-500/10 focus:text-red-600" 
+                  onClick={handleLogout}
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span className="font-medium text-sm">Log out</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
         </div>
       </div>
 

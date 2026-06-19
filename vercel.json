@@ -2,7 +2,7 @@
     "crons": [
         {
             "path": "/api/cron/agency-brain",
-            "schedule": "0 * * * *"
+            "schedule": "0 0 * * *"
         }
     ]
 }

@@ -59,7 +59,7 @@ function LoginForm() {
             <Card className="border border-border/60 shadow-xl backdrop-blur-md bg-card/65 select-none relative overflow-hidden rounded-2xl">
                 {/* Decorative top accent lines */}
                 <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-primary via-indigo-500 to-emerald-500" />
-                
+
                 <CardHeader className="space-y-2 text-center pt-8">
                     <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 border border-primary/20 text-primary mb-3">
                         <ShieldCheck className="h-6 w-6" />
@@ -69,7 +69,7 @@ function LoginForm() {
                         Enter your credentials to unlock the Control Tower
                     </CardDescription>
                 </CardHeader>
-                
+
                 <CardContent className="space-y-4">
                     {error && (
                         <Alert variant="destructive" className="border-destructive/30 bg-destructive/5 rounded-lg py-3">
@@ -90,7 +90,7 @@ function LoginForm() {
                             <Input
                                 id="username"
                                 type="text"
-                                placeholder="Shabd1908"
+                                placeholder="username"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
                                 className="pl-9 bg-muted/20"
@@ -119,10 +119,10 @@ function LoginForm() {
                         </div>
                     </div>
                 </CardContent>
-                
+
                 <CardFooter className="pt-2 pb-8 flex flex-col gap-2">
-                    <Button 
-                        type="submit" 
+                    <Button
+                        type="submit"
                         className="w-full font-bold shadow-lg shadow-primary/20 hover:scale-[1.01] active:scale-[0.99] transition-transform h-10 rounded-lg"
                         disabled={isLoading}
                     >

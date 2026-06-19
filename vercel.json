@@ -1,0 +1,8 @@
+{
+    "crons": [
+        {
+            "path": "/api/cron/agency-brain",
+            "schedule": "0 * * * *"
+        }
+    ]
+}

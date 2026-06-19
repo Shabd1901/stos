@@ -35,7 +35,15 @@ function LoginForm() {
                 body: JSON.stringify({ username, password })
             });
 
-            const data = await res.json();
+            let data;
+            const contentType = res.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                data = await res.json();
+            } else {
+                const text = await res.text();
+                const cleanText = text.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+                throw new Error(cleanText.slice(0, 150) || 'The server returned a non-JSON response.');
+            }
 
             if (!res.ok || !data.success) {
                 throw new Error(data.error || 'Authentication failed');
